@@ -102,32 +102,44 @@ def element_action(driver,
                 index: int = 0,
                 timeout: int = 40):
     try:
+        # 엘리먼트를 찾을 때 id, xpath, accessibility_id, class_name 중 어떤 값으로 찾을지 결정
         locator_type = __get_locator_type(find=find)
+
+        # 드라이버 설정 후 엘리먼트를 찾아보고, 같은 ID의 엘리먼트가 여러개일 경우 index 번호의 엘리먼트를 선택
         wait = WebDriverWait(driver=driver, timeout=timeout)
         element_list = wait.until(EC.visibility_of_all_elements_located((locator_type, elements[id][find])))
         result, element = __select_element(elements=element_list, action=action, value=value, index=index)
+
+        # action에 따라 element 동작 수행
         if result:
+            # check = 엘리먼트 존재 여부 체크
             if action == 'check':
                 logging.info(f'{id} check => True')
                 pass
+            # get_text = 텍스트 값 가져오기
             elif action == 'get_text':
                 logging.info(f'{id} get text => {{{element.text}}}')
                 return element.text
+            # get_location = 엘리먼트 위치 값 가져오기
             elif action == 'get_location':
                 el_location = element.location
                 el_x = el_location['x']
                 el_y = el_location['y']
                 logging.info(f'{id} x = {el_x}, y= {el_y}')
                 return (el_x, el_y)
+            # input = 텍스트 입력
             elif action == 'input':
                 logging.info(f'{id} input text => {{{value}}}')
                 element.send_keys(value)
+            # click = 엘리먼트 클릭
             elif action == 'click':
                 element.click()
                 logging.info(f'{id} click => SUCCESS')
+            # long_tap = 엘리먼트 롱탭 (3초간 누르기)
             elif action == 'long_tap':
                 ActionChains(driver).click_and_hold(element).pause(3).release().perform()
                 logging.info(f'{id} long_tap => SUCCESS')
+            # get_attribute = 엘리먼트의 특정 속성 값 가져오기
             elif action == 'get_attribute':
                 attribute = element.get_attribute(value)
                 logging.info(f"{id} get_attribute('{value}') => {attribute}")
