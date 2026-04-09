@@ -2,7 +2,11 @@
 
 ## 1. 인적사항 및 소개 (Profile)
 
+<img src="./public/resources/profile_new.png" width="130" align="right" alt="Profile Picture" />
+
 - **Name:** 정상혁
+- **Birth:** 1993.05.12
+- **Gender:** 남자 (Male)
 - **Phone:** 010-4875-4939
 - **Email:** tkdgur1798@gmail.com
 - **GitHub:** [https://github.com/sanghyeok-Jung](https://github.com/sanghyeok-Jung)
